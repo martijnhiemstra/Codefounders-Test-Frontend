@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Persons</title>
+</head>
+
+<body>
+    <h1>Personen</h1>
+
+    <table id="persons"></table>
+
+    <script>
+        function show(data) {
+            let personsTableHtml =
+                `<tr>
+                            <th>Voornaam</th>
+                            <th>Achternaam</th>
+                        </tr>`;
+
+            // Loop to access all rows 
+            for (let r of data) {
+                personsTableHtml += `<tr> 
+                            <td>${r.firstName}</td>
+                            <td>${r.lastName}</td>
+                        </tr>`;
+            }
+
+            // Setting innerHTML as tab variable
+            document.getElementById("persons").innerHTML = personsTableHtml;
+        }
+
+        function loadPersons() {
+            fetch('http://localhost:8080/api/person/all')
+                .then(res => res.json())
+                .then(data => {
+                    console.log('response', data);
+                    show(data);
+                })
+                .catch(error => {
+                    console.log('error', error);
+                    // handle the error
+                });
+        }
+
+        loadPersons();
+    </script>
+
+</body>
+
+</html>
